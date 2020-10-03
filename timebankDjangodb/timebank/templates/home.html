@@ -1,1 +1,12 @@
-Hello World!
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Members Database</h1>
+
+{% for item in all %}
+<strong> <p>{{ item.fname }} {{ item.lname }}</p> </strong>
+<p>Credits: {{ item.credits }}</p>
+{% endfor %}</div>
+
+{% endblock %}
