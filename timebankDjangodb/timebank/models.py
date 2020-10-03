@@ -12,6 +12,13 @@ class Member(models.Model):
     cname = models.CharField(max_length = 100)
     def __str__(self):
         return self.fname + ' ' + self.lname
+        
+class TempMember(models.Model):
+    fname = models.CharField(max_length = 50)
+    lname = models.CharField(max_length = 100)
+    email = models.EmailField(max_length = 200)
+    passwd = models.CharField(max_length = 50)
+
 
 class Community(models.Model):
     cname = models.CharField(max_length = 100)
