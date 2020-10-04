@@ -20,10 +20,18 @@ def join(request):
         # form1.cname = ""
         if form.is_valid():
             form.save()
+        else:
+            messages.success(request, ("There was an error in your signup attempt"))
+            fname = request.POST['fname']
+            lname = request.POST['lname']
+            passwd = request.POST['passwd']
+            email = request.POST['email']
+
+            return render(request, 'join.html', {'fname':fname, 'lname':lname, 'email':email, 'passwd':passwd})
         messages.success(request, ("Your form has been submitted!!"))
         m = Member(fname = form.cleaned_data['fname'], lname = form.cleaned_data['lname'], email=form.cleaned_data['email'], passwd=form.cleaned_data['passwd'], cname="", age = 0, credits=0)
         m.save(force_insert=True)
-        Member.delete()
+        # Member.delete()
         return redirect('home')
     else:
         return render(request, 'join.html', {})
