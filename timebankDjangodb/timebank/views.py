@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Member, TempMember
 from .forms import MemberForm
 from django.contrib import messages
@@ -21,8 +21,9 @@ def join(request):
         if form.is_valid():
             form.save()
         messages.success(request, ("Your form has been submitted!!"))
-        m = Member(fname = form['fname'], lname = form['lname'], email=form['email'], passwd=form['passwd'], cname="", age = 0, credits=0)
+        m = Member(fname = form.cleaned_data['fname'], lname = form.cleaned_data['lname'], email=form.cleaned_data['email'], passwd=form.cleaned_data['passwd'], cname="", age = 0, credits=0)
         m.save(force_insert=True)
-        return render(request, 'home.html', {})
+        Member.delete()
+        return redirect('home')
     else:
         return render(request, 'join.html', {})
